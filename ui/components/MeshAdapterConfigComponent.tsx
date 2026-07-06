@@ -35,6 +35,13 @@ const AdapterButtons = styled('div')({
   paddingTop: '2rem',
 });
 
+const DeployActions = styled(AdapterButtons)(({ theme }) => ({
+  paddingTop: 0,
+  alignItems: 'flex-end',
+  gap: theme.spacing(1),
+  marginTop: theme.spacing(1),
+}));
+
 const AdapterButton = styled(Button)(({ theme }) => ({
   marginLeft: theme.spacing(1),
 }));
@@ -468,7 +475,7 @@ const MeshAdapterConfigComponent = () => {
               />
             </Grid2>
           </Grid2>
-          <Grid2 container spacing={1} alignItems="flex-end" justifyContent="flex-end" size="grow">
+          <DeployActions>
             <div ref={labelRef}>
               <TextField
                 id="deployPort"
@@ -478,29 +485,26 @@ const MeshAdapterConfigComponent = () => {
                 onChange={(e) => handleDeployPortChange(e.target as HTMLInputElement)}
                 value={meshDeployURL}
                 error={meshDeployURLError}
+                InputLabelProps={{ shrink: true }}
               />
             </div>
-            <React.Fragment>
-              <AdapterButtons>
-                <AdapterButton
-                  type="submit"
-                  variant="contained"
-                  data-testid="adapter-deploy-button"
-                  color="primary"
-                  size="large"
-                  onClick={handleAdapterDeploy}
-                  disabled={
-                    !CAN(
-                      keys.DEPLOY_CLOUD_NATIVE_INFRASTRUCTURE.action,
-                      keys.DEPLOY_CLOUD_NATIVE_INFRASTRUCTURE.subject,
-                    )
-                  }
-                >
-                  Deploy
-                </AdapterButton>
-              </AdapterButtons>
-            </React.Fragment>
-          </Grid2>
+            <AdapterButton
+              type="submit"
+              variant="contained"
+              data-testid="adapter-deploy-button"
+              color="primary"
+              size="large"
+              onClick={handleAdapterDeploy}
+              disabled={
+                !CAN(
+                  keys.DEPLOY_CLOUD_NATIVE_INFRASTRUCTURE.action,
+                  keys.DEPLOY_CLOUD_NATIVE_INFRASTRUCTURE.subject,
+                )
+              }
+            >
+              Deploy
+            </AdapterButton>
+          </DeployActions>
         </WrapperStyledDiv>
       </NoSsr>
     );
