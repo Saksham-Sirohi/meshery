@@ -38,6 +38,7 @@ const AdapterButtons = styled('div')({
 const DeployActions = styled(AdapterButtons)(({ theme }) => ({
   paddingTop: 0,
   alignItems: 'flex-end',
+  flexWrap: 'wrap',
   marginTop: theme.spacing(1),
 }));
 
