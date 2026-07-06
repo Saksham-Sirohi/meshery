@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Grid2, Chip, Button, TextField, Tooltip, Avatar, styled } from '@sistent/sistent';
 import { NoSsr } from '@sistent/sistent';
 import ReactSelectWrapper from './ReactSelectWrapper';
@@ -38,7 +38,6 @@ const AdapterButtons = styled('div')({
 const DeployActions = styled(AdapterButtons)(({ theme }) => ({
   paddingTop: 0,
   alignItems: 'flex-end',
-  gap: theme.spacing(1),
   marginTop: theme.spacing(1),
 }));
 
@@ -64,7 +63,6 @@ const STATUS = {
 };
 
 const MeshAdapterConfigComponent = () => {
-  const labelRef = useRef(null);
   const { meshAdapters: globalAdapters, meshAdaptersts: meshAdapterStates } = useSelector(
     (state) => state.adapter,
   );
@@ -156,8 +154,6 @@ const MeshAdapterConfigComponent = () => {
 
   const handleAvailableAdapterChange = (newValue) => {
     if (typeof newValue !== 'undefined') {
-      // Trigger label animation manually
-      labelRef.current.querySelector('label').classList.add('MuiInputLabel-shrink');
       setSelectedAvailableAdapter(newValue);
       setSelectedAvailableAdapterError(false);
 
@@ -476,18 +472,16 @@ const MeshAdapterConfigComponent = () => {
             </Grid2>
           </Grid2>
           <DeployActions>
-            <div ref={labelRef}>
-              <TextField
-                id="deployPort"
-                type="text"
-                label="Enter Port"
-                variant="standard"
-                onChange={(e) => handleDeployPortChange(e.target as HTMLInputElement)}
-                value={meshDeployURL}
-                error={meshDeployURLError}
-                InputLabelProps={{ shrink: true }}
-              />
-            </div>
+            <TextField
+              id="deployPort"
+              type="text"
+              label="Enter Port"
+              variant="standard"
+              onChange={(e) => handleDeployPortChange(e.target as HTMLInputElement)}
+              value={meshDeployURL}
+              error={meshDeployURLError}
+              InputLabelProps={meshDeployURL ? { shrink: true } : undefined}
+            />
             <AdapterButton
               type="submit"
               variant="contained"
